@@ -3,6 +3,8 @@ package com.biz.cabinvice.service;
 import com.biz.cabinvice.model.InvoiceSummery;
 import com.biz.cabinvice.model.Ride;
 
+import java.util.List;
+
 public class InvoiceService {
 
     private final double COST_PER_KM = 10.0;
@@ -36,4 +38,17 @@ public class InvoiceService {
         return totalFare;
     }
 
+    public InvoiceSummery GetInvoiceSummary(String userName) {
+
+        List<Ride> list=UserAccount.userMap.get(userName);
+        double totalFare=0.0;
+        int rideCount=0;
+        for(Ride ride:list)
+        {
+            totalFare+=calculateFare(ride.getDistance(),ride.getTime());
+            rideCount++;
+        }
+
+        return new InvoiceSummery(rideCount,totalFare);
+    }
 }

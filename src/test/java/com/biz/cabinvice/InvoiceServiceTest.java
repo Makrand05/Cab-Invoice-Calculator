@@ -3,8 +3,12 @@ package com.biz.cabinvice;
 import com.biz.cabinvice.model.InvoiceSummery;
 import com.biz.cabinvice.model.Ride;
 import com.biz.cabinvice.service.InvoiceService;
+import com.biz.cabinvice.service.UserAccount;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InvoiceServiceTest {
 
@@ -51,5 +55,20 @@ public class InvoiceServiceTest {
         InvoiceSummery actualSummery=invoiceService.calculateFare(rides);
         Assert.assertEquals(expectedSummery,actualSummery);
     }
+    @Test
+    public void givenUserID_whenCalculateFare_shouldReturnAggregareSummery() {
+        InvoiceService invoiceService=new InvoiceService();
 
+        String userName="Rahul";
+        List<Ride> rideList=new ArrayList<>();
+
+              rideList.add(new Ride(2.0,5));
+              rideList.add(new Ride(1.0,5));
+              rideList.add(new Ride(0.1,1));
+        new UserAccount(userName,rideList);
+        InvoiceSummery actualSummery= invoiceService.GetInvoiceSummary(userName);
+        InvoiceSummery expectedSummery= new InvoiceSummery(3,45.0);
+      //  InvoiceSummery actualSummery=invoiceService.calculateFare(rides);
+        Assert.assertEquals(expectedSummery,actualSummery);
+    }
 }
