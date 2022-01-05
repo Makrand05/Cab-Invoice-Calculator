@@ -1,5 +1,6 @@
 package com.biz.cabinvice.service;
 
+import com.biz.cabinvice.model.InvoiceSummery;
 import com.biz.cabinvice.model.Ride;
 
 public class InvoiceService {
@@ -17,7 +18,16 @@ public class InvoiceService {
         return Math.max(fare,MIN_FARE);
     }
 
-    public double calculateFare(Ride[] rides) {
+    public InvoiceSummery calculateFare(Ride[] rides) {
+        double totalFare=0.0;
+        for(Ride ride:rides)
+        {
+            totalFare+=calculateFare(ride.getDistance(),ride.getTime());
+        }
+        System.out.println("Number of rides : " +rides.length+" Fare : "+totalFare);
+        return new InvoiceSummery(rides.length,totalFare);
+    }
+    public double calculateFares(Ride[] rides) {
         double totalFare=0.0;
         for(Ride ride:rides)
         {
@@ -25,4 +35,5 @@ public class InvoiceService {
         }
         return totalFare;
     }
+
 }

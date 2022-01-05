@@ -1,5 +1,6 @@
 package com.biz.cabinvice;
 
+import com.biz.cabinvice.model.InvoiceSummery;
 import com.biz.cabinvice.model.Ride;
 import com.biz.cabinvice.service.InvoiceService;
 import org.testng.Assert;
@@ -30,12 +31,25 @@ public class InvoiceServiceTest {
     public void givenMultipleRides_whenCalculateFare_shouldReturnTotalFare() {
         InvoiceService invoiceService=new InvoiceService();
         Ride []rides={
+                new Ride(2.0,5),
+                new Ride(1.0,5),
+                new Ride(0.1,1) };
+        double totalFare=invoiceService.calculateFares(rides);
+
+        Assert.assertEquals(45.0,totalFare);
+    }
+
+    @Test
+    public void givenMultipleRides_whenCalculateFare_shouldReturnAggregareTotalFare() {
+        InvoiceService invoiceService=new InvoiceService();
+        Ride []rides={
 
                 new Ride(2.0,5),
                 new Ride(1.0,5),
                 new Ride(0.1,1) };
-        double totalFare=invoiceService.calculateFare(rides);
-        Assert.assertEquals(45.0,totalFare);
+        InvoiceSummery expectedSummery= new InvoiceSummery(3,45.0);
+        InvoiceSummery actualSummery=invoiceService.calculateFare(rides);
+        Assert.assertEquals(expectedSummery,actualSummery);
     }
 
 }
