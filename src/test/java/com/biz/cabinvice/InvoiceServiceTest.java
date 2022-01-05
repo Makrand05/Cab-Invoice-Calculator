@@ -68,7 +68,24 @@ public class InvoiceServiceTest {
         new UserAccount(userName,rideList);
         InvoiceSummery actualSummery= invoiceService.GetInvoiceSummary(userName);
         InvoiceSummery expectedSummery= new InvoiceSummery(3,45.0);
-      //  InvoiceSummery actualSummery=invoiceService.calculateFare(rides);
+        Assert.assertEquals(expectedSummery,actualSummery);
+    }
+    @Test
+    public void givenUserIDPremiumRides_whenCalculateFare_shouldReturnAggregareSummery() {
+        InvoiceService invoiceService=new InvoiceService();
+
+        String userName="Rahul";
+        List<Ride> rideList=new ArrayList<>();
+
+        rideList.add(new Ride(2.0,5,"Normal"));
+        rideList.add(new Ride(1.0,5,"Premium"));
+        rideList.add(new Ride(0.1,1,"Premium"));
+
+        new UserAccount(userName,rideList);
+
+        InvoiceSummery actualSummery= invoiceService.GetInvoiceSummary(userName);
+        InvoiceSummery expectedSummery= new InvoiceSummery(3,70.0);
+
         Assert.assertEquals(expectedSummery,actualSummery);
     }
 }
